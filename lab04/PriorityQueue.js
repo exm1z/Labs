@@ -20,6 +20,26 @@ function queue() {
       }
       if (type === "oldest") return items[0].value;
       if (type === "newest") return items[items.length - 1].value;
+    },
+
+    dequeue(type) {
+      if (items.length === 0) return null;
+      let index = 0;
+
+      if (type === "highest") {
+        index = items.reduce((maxIdx, item, i, arr) =>
+          item.priority > arr[maxIdx].priority ? i : maxIdx
+        , 0)
+      }
+      if (type === "lowest") {
+        index = items.reduce((minIdx, item, i, arr) =>
+          item.priority < arr[minIdx].priority ? i : minIdx
+        , 0)
+      }
+      if (type === "oldest") index = 0;
+      if (type === "newest") index = items.length - 1;
+
+      return items.splice(index, 1)[0].value;
     }
   }
 }
@@ -33,3 +53,6 @@ console.log(q.peek("highest"));
 console.log(q.peek("lowest"));
 console.log(q.peek("oldest"));
 console.log(q.peek("newest"));
+
+console.log(q.dequeue("highest"));
+console.log(q.dequeue("oldest"));
