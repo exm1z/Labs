@@ -52,3 +52,25 @@ asyncMapCallback([1, 2, 3], asyncDouble, (err, res) => {
 })
 asyncMapPromise([1, 2, 3], asyncTriple)
   .then(res => console.log("Promise:", res));
+
+  async function run() {
+  const res = await asyncMapPromise([1, 2, 3], asyncTriple);
+  console.log("Async/Await:", res);
+}
+run();
+
+const controller = new AbortController();
+
+asyncMapPromise(
+  [1, 2, 3, 4],
+  async (x) => {
+    return new Promise(r => setTimeout(() => r(x * 2), 500));
+  },
+  controller.signal
+)
+.then(res => console.log("Abort:", res))
+.catch(err => console.log("Скасовано"));
+
+setTimeout(() => {
+  controller.abort();
+}, 600);
