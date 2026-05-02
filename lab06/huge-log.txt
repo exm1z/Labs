@@ -1,0 +1,6 @@
+INFO Server started
+INFO User login
+ERROR Database connection failed
+INFO Request received
+ERROR Timeout occurred
+INFO Server stopped
