@@ -12,6 +12,10 @@ class User {
     subscribe() {
         this.bus.on('message', this.listener);
     }
+    unsubscribe() {
+        this.bus.off('message', this.listener);
+    }
+
     sendMessage(msg) {
         this.bus.emit('message', `${this.name}: ${msg}`);
     }
@@ -26,5 +30,10 @@ userA.subscribe();
 userB.subscribe();
 userC.subscribe();
 
-console.log("First message:");
-userA.sendMessage("Hello!");
+console.log("\nFirst message:");
+userA.sendMessage("Hello everyone!");
+
+userB.unsubscribe();
+
+console.log("\nSecond message:");
+userC.sendMessage("Only some will receive this");
